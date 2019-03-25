@@ -1,0 +1,252 @@
+#
+# Definition of data types
+#
+
+type UserGroup {
+    id: ID
+    name: String
+    permission: Object
+}
+
+type User {
+    id: ID
+    name: String
+    password: String
+    avatar: String
+    user_group: UserGroup
+    date_added: Date
+}
+
+type Type {
+    id: ID
+    name: String
+    date_added: Date
+    user: User
+}
+
+type Society {
+    id: ID
+    name: String
+    address: String
+    ice: String
+    image: String
+    start: Int
+    user: User
+    date_added: Date
+}
+
+type SocietyTelephone {
+    id: ID
+    name: String
+    value: String
+    society: Society
+}
+
+type Building {
+    id: ID
+    name: String
+    image: String
+    type: Type
+    user: User
+    society: Society
+    date_added: Date
+}
+
+type BuildingAddress {
+    id: ID
+    address: String
+    building: Building
+}
+
+type BuildingTelephone {
+    id: ID
+    name: String
+    value: String
+    building: Building
+}
+
+type Property {
+    id: ID
+    number: String
+    floor: String
+    area: Int
+    location_price: Float
+    date_added: Date
+    building: Building
+    building_address: BuildingAddress
+    type: Type
+    user: User
+}
+
+type PropertyImage {
+    id: ID
+    name: String
+    property: Property
+}
+
+type Client {
+    id: ID
+    name: String
+    type: String
+    identification: String
+    address: String
+    date_added: Date
+    user: User
+}
+
+type ClientTelephone {
+    id: ID
+    name: String
+    value: String
+}
+
+type Contract {
+    id: ID
+    property: Property
+    client: Client
+    date_begin: Date
+    date_end: Date
+    advanced_price: Float
+    tax: Float
+    advanced_price_return: Boolean
+    date_added: Date
+    user: User
+}
+
+type Payment {
+    id: ID
+    contract: Contract
+    date: Date
+    price: Float
+    price_paid: Float
+    print_date: Float
+    paid_date: Float
+    mode: String
+    printer: User
+    payer: User
+    user: User
+    date_added: Date
+}
+
+type Query {
+    userGroup(id: ID,
+    name: String,
+    permission: Object): [UserGroup]
+
+    user(id: ID,
+    name: String,
+    password: String
+    avatar: String
+    id_user_group: Int): [User]
+
+    type(
+    id: ID
+    name: String
+    date_added: Date
+    user: User): [Type]
+
+    society (
+    id: ID
+    name: String
+    address: String
+    ice: String
+    image: String
+    start: Int
+    user: User
+    date_added: Date): [Society]
+
+    building (
+    id: ID
+    name: String
+    image: String
+    type: Type
+    user: User
+    society: Society
+    date_added: Date): [Building]
+
+    property (
+    id: ID
+    number: String
+    floor: String
+    area: Int
+    location_price: Float
+    date_added: Date
+    building: Building
+    building_address: BuildingAddress
+    type: Type
+    user: User): [Property]
+
+    client (
+    id: ID
+    name: String
+    type: String
+    identification: String
+    address: String
+    date_added: Date
+    user: User): [Client]
+
+    contract (
+    id: ID
+    property: Property
+    client: Client
+    date_begin: Date
+    date_end: Date
+    advanced_price: Float
+    tax: Float
+    advanced_price_return: Boolean
+    date_added: Date
+    user: User): [Contract]
+
+    payment (
+    id: ID
+    contract: Contract
+    date: Date
+    price: Float
+    price_paid: Float
+    print_date: Float
+    paid_date: Float
+    mode: String
+    printer: User
+    payer: User
+    user: User
+    date_added: Date): [Payment]
+}
+
+type Mutation {
+    addUserGroup(id: ID, name: String, permission: Object): UserGroup
+    updateUserGroup(id: ID!, name: String, permission: Object): UserGroup
+    deleteUserGroup(id: ID!): UserGroup
+
+    addUser(id: ID, name: String, password: String, avatar: String, id_user_group: ID!): User
+    updateUser(id: ID!, name: String, password: String, avatar: String, id_user_grou: ID!): User
+    deleteUser(id: ID!): User
+
+    addType( id: ID, name: String, date_added: Date, id_user: ID!): Type
+    updateType( id: ID!, name: String, date_added: Date, id_user: ID!): Type
+    deleteType( id: ID!): Type
+
+    addSociety (id: ID, name: String, address: String, ice: String, image: String, start: Int, id_user: ID!, date_added: Date): Society
+    updateSociety (id: ID!, name: String, address: String, ice: String, image: String, start: Int, id_user: ID!, date_added: Date): Society
+    deleteSociety (id: ID!): Society
+
+    addBuilding(id: ID, name: String, image: String, type: ID!, user: User, society: ID!, date_added: Date): Building
+    updateBuilding(id: ID!, name: String, image: String, type: ID!, user: User, id_society: ID!, date_added: Date): Building
+    updateBuilding(id: ID!, name: String, image: String, type: ID!, user: User, id_society: ID!, date_added: Date): Building
+
+    addProperty(id: ID, number: String, floor: String, area: Int, location_price: Float, date_added: Date, building: ID!, building_address: ID!,type: ID!,user: ID!): Property
+    updateProperty(id: ID!, number: String, floor: String, area: Int, location_price: Float, date_added: Date, building: ID!, building_address: ID!,type: ID!,user: ID!): Property
+    deleteProperty(id: ID!): Property
+
+    addClient (id: ID, name: String, type: String, identification: String, address: String, date_added: Date, user: ID!): Client
+    updateClient (id: ID!, name: String, type: String, identification: String, address: String, date_added: Date, user: ID!): Client
+    deleteClient (id: ID!): Client
+
+    addContract (id: ID, property: ID!, client: ID!, date_begin: Date, date_end: Date, advanced_price: Float, tax: Float, advanced_price_return: Boolean, date_added: Date, user: ID!): Contract
+    updateContract (id: ID!, property: ID!, client: ID!, date_begin: Date, date_end: Date, advanced_price: Float, tax: Float, advanced_price_return: Boolean, date_added: Date, user: ID!): Contract
+    deleteContract (id: ID!): Contract
+
+    addPayment(id: ID, contract: Contract, date: Date, price: Float, price_paid: Float, print_date: Float, paid_date: Float, mode: String, printer: ID!, payer: ID!, user: Id!, date_added: Date): Payment
+    updatePayment(id: ID!, contract: Contract, date: Date, price: Float, price_paid: Float, print_date: Float, paid_date: Float, mode: String, printer: ID!, payer: ID!, user: Id!, date_added: Date): Payment
+    deletePayment(id: ID!): Payment
+}
+
